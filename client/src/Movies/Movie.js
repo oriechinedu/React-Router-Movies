@@ -54,14 +54,13 @@ export default class Movie extends Component {
             Metascore: <strong>{metascore}</strong>
           </div>
           <h3>Actors</h3>
-
           {stars.map(star => (
             <div key={star} className="movie-star">
               {star}
             </div>
           ))}
         </div>
-        <div className="save-button">Save</div>
+        <div className="save-button" onClick={() => this.props.addToSavedList(this.state.movie)}>Save</div>
       </div>
     );
   }
