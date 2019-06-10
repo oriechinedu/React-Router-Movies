@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-
+import {BrowserRouter as Router, Route} from 'react-router-dom'
 import SavedList from './Movies/SavedList';
 import MovieList from './Movies/MovieList';
 import Movie from './Movies/Movie';
+
 
 export default class App extends Component {
   constructor() {
@@ -15,14 +16,21 @@ export default class App extends Component {
   addToSavedList = movie => {
     const savedList = this.state.savedList;
     savedList.push(movie);
-    this.setState({ savedList });
+    this.setState({
+      savedList: [...new Set(savedList)]
+    });
   };
-
+ 
   render() {
     return (
       <div>
-        <SavedList list={this.state.savedList} />
-        <div>Replace this Div with your Routes</div>
+        <Router>
+          <SavedList list={this.state.savedList} />
+          <Route path="/" exact component={MovieList} />
+          <Route path={'/movies/:id'}  
+            render={ (props) => <Movie addToSavedList={this.addToSavedList} {...props} />}
+          />
+        </Router>
       </div>
     );
   }
