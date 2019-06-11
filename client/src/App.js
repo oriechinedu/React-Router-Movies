@@ -14,13 +14,18 @@ export default class App extends Component {
   }
 
   addToSavedList = movie => {
-    const savedList = this.state.savedList;
-    savedList.push(movie);
-    this.setState({
-      savedList: [...new Set(savedList)]
-    });
+    if (!this.isSaved(movie)) {
+      const savedList = this.state.savedList;
+      savedList.push(movie);
+      this.setState( prevState => ({
+        ...prevState,
+        savedList: savedList
+      }));
+    }
   };
- 
+ isSaved = (movie) => {
+   return !!this.state.savedList.find(mv => movie.id === mv.id)
+ }
   render() {
     return (
       <div>
